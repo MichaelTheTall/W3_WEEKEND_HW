@@ -29,26 +29,15 @@ class Ticket
     values = [@customer_id, @film_id, @fee]
     ticket = SqlRunner.run( sql,values ).first
     @id = ticket['id'].to_i
+
     sql2 = "UPDATE customers SET funds  = funds - $2 WHERE id = $1"
     values2 = [@customer_id, @fee]
     SqlRunner.run(sql2,values2)
+
+    sql3 = "UPDATE screenings SET tickets_left = tickets_left - 1 WHERE id = $1"
+    values3 = [@film_id]
+    SqlRunner.run(sql3, values3)
   end
-  # def save()
-  #   sql = "INSERT INTO tickets
-  #   (
-  #     customer_id,
-  #     film_id,
-  #     fee
-  #   )
-  #   VALUES
-  #   (
-  #     $1, $2, $3
-  #   )
-  #   RETURNING id"
-  #   values = [@customer_id, @film_id, @fee]
-  #   ticket = SqlRunner.run( sql,values ).first
-  #   @id = ticket['id'].to_i
-  # end
 
   def self.all()
     sql = "SELECT * FROM tickets"
