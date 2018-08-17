@@ -30,5 +30,6 @@ CREATE TABLE screenings
   id SERIAL8 PRIMARY KEY,
   film_id INT8 REFERENCES films(id),
   showing TIME,
-  tickets_left INT8 NOT NULL
+  tickets_left INT8 NOT NULL,
+  tickets_sold INT8 NOT NULL
 );

@@ -32,11 +32,13 @@ screening1 = Screening.new({'film_id' => film1.id, 'showing' => '20:00', 'ticket
 screening2 = Screening.new({'film_id' => film2.id, 'showing' => '22:00', 'tickets_left' => 100})
 screening3 = Screening.new({'film_id' => film3.id, 'showing' => '18:30', 'tickets_left' => 50})
 screening4 = Screening.new({'film_id' => film4.id, 'showing' => '19:15', 'tickets_left' => 150})
+screening5 = Screening.new({'film_id' => film4.id, 'showing' => '15:30', 'tickets_left' => 150})
 
 screening1.save()
 screening2.save()
 screening3.save()
 screening4.save()
+screening5.save()
 
 ticket1 = Ticket.new({'film_id' => film1.id, 'customer_id' => customer1.id, 'fee' => film1.price})
 ticket2 = Ticket.new({'film_id' => film2.id, 'customer_id' => customer1.id, 'fee' => film2.price})

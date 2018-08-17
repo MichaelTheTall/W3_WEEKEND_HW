@@ -3,13 +3,14 @@ require_relative("../db/sql_runner")
 class Screening
 
   attr_reader :id
-  attr_accessor :film_id, :showing, :tickets_left
+  attr_accessor :film_id, :showing, :tickets_left, :tickets_sold
 
   def initialize( options )
     @id = options['id'].to_i if options['id']
     @film_id = options['film_id'].to_i
     @showing = options['showing']
     @tickets_left = options['tickets_left'].to_i
+    @tickets_sold = options['tickets_sold'].to_i
   end
 
   def self.map_items(screening_data)
@@ -22,11 +23,12 @@ class Screening
       INSERT INTO screenings(
       film_id,
       showing,
-      tickets_left)
+      tickets_left,
+      tickets_sold)
       VALUES(
-      $1, $2, $3)
+      $1, $2, $3, $4)
       RETURNING id"
-    values = [@film_id, @showing, @tickets_left]
+    values = [@film_id, @showing, @tickets_left, 0]
     screening = SqlRunner.run( sql,values ).first
     @id = screening['id'].to_i
   end
@@ -40,12 +42,12 @@ class Screening
   def update()
     sql = "UPDATE screenings
     SET(
-    film_id, showing, tickets_left
+    film_id, showing, tickets_left, tickets_sold
     ) = (
-    $1, $2, $3
+    $1, $2, $3, $4
     )
-    WHERE id = $4"
-    values=[@film_id, @showing, @tickets_left, @id]
+    WHERE id = $5"
+    values=[@film_id, @showing, @tickets_left, @tickets_sold, @id]
     SqlRunner.run(sql, values)
   end
 
@@ -73,11 +75,13 @@ class Screening
 
     result = db.exec('SELECT films.title, screenings.showing,     screenings.tickets_left
     FROM screenings
-    INNER JOIN films ON films.id=screenings.film_id')
+    INNER JOIN films ON films.id=screenings.film_id
+    ORDER BY showing')
     result.each do |row|
       puts row
     end
     db.close()
   end
+
 
 end

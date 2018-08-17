@@ -80,4 +80,12 @@ class Film
     return list.count
   end
 
+  def popular()
+    sql = "SELECT * FROM screenings WHERE screenings.film_id = $1 ORDER BY tickets_sold DESC LIMIT 1"
+    values = [@id]
+    # return SqlRunner.run(sql, values)
+    list = SqlRunner.run(sql, values)
+    return "The most popular time to see this film is #{Screening.map_items(list)[0].showing}!"
+  end
+
 end

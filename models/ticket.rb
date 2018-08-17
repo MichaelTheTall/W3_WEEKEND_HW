@@ -37,6 +37,10 @@ class Ticket
     sql3 = "UPDATE screenings SET tickets_left = tickets_left - 1 WHERE id = $1"
     values3 = [@film_id]
     SqlRunner.run(sql3, values3)
+
+    sql4 = "UPDATE screenings SET tickets_sold = tickets_sold + 1 WHERE id = $1"
+    values4 = [@film_id]
+    SqlRunner.run(sql4, values4)
   end
 
   def self.all()
