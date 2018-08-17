@@ -60,12 +60,6 @@ class Screening
     SqlRunner.run(sql)
   end
 
-  # def ticket_sold(num)
-  #   sql = "UPDATE screenings SET tickets_left = tickets_left - $2 WHERE id = $1"
-  #   values = [@film_id, num]
-  #   SqlRunner.run(sql, values)
-  # end
-
   def customer()
     sql = "SELECT * FROM customers
     WHERE id = $1"
@@ -74,15 +68,16 @@ class Screening
     return Customer.new(customer)
   end
 
-  # def self.show()
-  #   sql = "SELECT films.title
-  #   FROM films
-  #   INNER JOIN screenings
-  #   ON screenings.film_id = films.id
-  #   WHERE screenings.film_id = $1"
-  #   values = [@id]
-  #   return SqlRunner.run(sql, values)
-  #   # return Customer.map_items(customers)
-  # end
+  def self.show()
+    db = PG.connect({ dbname: 'cinema', host: 'localhost' })
+
+    result = db.exec('SELECT films.title, screenings.showing,     screenings.tickets_left
+    FROM screenings
+    INNER JOIN films ON films.id=screenings.film_id')
+    result.each do |row|
+      puts row
+    end
+    db.close()
+  end
 
 end
