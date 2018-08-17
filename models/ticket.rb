@@ -43,40 +43,40 @@ class Ticket
   def update()
     sql = "UPDATE tickets
     SET(
-      customer_id, film_id, fee
-      ) = (
-        $1, $2, $3
-      )
-      WHERE id = $4"
-      values=[@customer_id, @film_id, @fee, @id]
-      SqlRunner.run(sql, values)
-    end
-
-    def delete()
-      sql = "DELETE FROM tickets WHERE id = $1"
-      values=[@id]
-      SqlRunner.run(sql, values)
-    end
-
-    def self.delete_all()
-      sql = "DELETE FROM tickets"
-      SqlRunner.run(sql)
-    end
-
-    def film()
-      sql = "SELECT * FROM films
-      WHERE id = $1"
-      values = [@film_id]
-      film = SqlRunner.run(sql, values).first
-      return Film.new(film)
-    end
-
-    def customer()
-      sql = "SELECT * FROM customers
-      WHERE id = $1"
-      values = [@customer_id]
-      customer = SqlRunner.run(sql, values).first
-      return Customer.new(customer)
-    end
-
+    customer_id, film_id, fee
+    ) = (
+    $1, $2, $3
+    )
+    WHERE id = $4"
+    values=[@customer_id, @film_id, @fee, @id]
+    SqlRunner.run(sql, values)
   end
+
+  def delete()
+    sql = "DELETE FROM tickets WHERE id = $1"
+    values=[@id]
+    SqlRunner.run(sql, values)
+  end
+
+  def self.delete_all()
+    sql = "DELETE FROM tickets"
+    SqlRunner.run(sql)
+  end
+
+  def film()
+    sql = "SELECT * FROM films
+    WHERE id = $1"
+    values = [@film_id]
+    film = SqlRunner.run(sql, values).first
+    return Film.new(film)
+  end
+
+  def customer()
+    sql = "SELECT * FROM customers
+    WHERE id = $1"
+    values = [@customer_id]
+    customer = SqlRunner.run(sql, values).first
+    return Customer.new(customer)
+  end
+
+end

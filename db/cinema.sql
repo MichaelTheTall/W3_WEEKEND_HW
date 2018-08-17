@@ -21,5 +21,5 @@ CREATE TABLE tickets
   id SERIAL8 PRIMARY KEY,
   customer_id INT8 REFERENCES customers(id),
   film_id INT8 REFERENCES films(id),
-  fee INT8
+  fee INT8 NOT NULL
 );
