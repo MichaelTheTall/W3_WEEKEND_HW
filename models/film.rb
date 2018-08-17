@@ -75,4 +75,9 @@ class Film
     return Customer.map_items(customers)
   end
 
+  def number_of_customers()
+    list = self.customers()
+    return list.count
+  end
+
 end
